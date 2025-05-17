@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% include 'stock/headers.html' %}
+
+<div class="nk-content">
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="components-preview wide-md mx-auto">
+                    <div class="nk-block nk-block-lg">
+                        <div class="nk-block-head">
+                            <div class="nk-block-head-content">
+                                <h4 class="nk-block-title">รายละเอียดสินค้า</h4>
+                            </div>
+                        </div>
+                        <div class="pt-5 pb-3">
+                            <a href="{% url 'issue_item' detail.id %}" class="btn btn-primary">เบิกสินค้า</a>
+                            <a href="{% url 'receive_item' detail.id %}" class="btn btn-success">รับสินค้า</a>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>ชื่อสินค้า</th>
+                                        <td>{{ detail.item_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>หมวดหมู่</th>
+                                        <td>{{ detail.category }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>จำนวนในสต็อก</th>
+                                        <td>{{ detail.quantity }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>ระดับแจ้งเตือน</th>
+                                        <td>{{ detail.re_order }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>อัปเดตล่าสุด</th>
+                                        <td>{{ detail.last_updated }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>วันที่เพิ่ม</th>
+                                        <td>{{ detail.timestamp }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'stock/footers.html' %}
+
+<script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+{% if messages %}
+{% for message in messages %}
+{% if message.tags %}
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: '{{ message.tags }}',
+            title: '{{message}}',
+            showConfirmButton: true,
+            timer: 15000
+        })
+    </script>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}
+

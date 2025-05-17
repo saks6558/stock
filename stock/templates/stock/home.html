@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="nk-content">
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">Dashboard</h3>
+                        </div>
+                        <div class="nk-block-head-content">
+                            <form method="post" action="{% url 'send_daily_report_email' %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success">ส่งอีเมลรายงานประจำวัน</button>
+                            </form>
+                            <form method="post" action="{% url 'send_repair_status_report_email' %}" style="display:inline; margin-left:10px;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-warning">ส่งอีเมลแจ้งเตือนรายการซ่อม</button>
+                            </form>
+                            <div class="toggle-wrap nk-block-tools-toggle">
+                                <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
+                                <div class="toggle-expand-content" data-content="pageMenu">
+                                    <ul class="nk-block-tools g-3">
+                                        <li class="nk-block-tools-opt"><a href="/view_history" class="btn btn-primary"><em class="icon ni ni-reports"></em><span>Reports</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nk-block">
+                    <div class="row g-gs">
+                        <div class="col-xxl-3 col-sm-6">
+                            <div class="card">
+                                <div class="nk-ecwg nk-ecwg6">
+                                    <div class="card-inner">
+                                        <div class="card-title-group">
+                                            <div class="card-title">
+                                                <h6 class="title">Total Stocks</h6>
+                                            </div>
+                                        </div>
+                                        <div class="data">
+                                            <div class="data-group">
+                                                <div class="amount">{{body}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-sm-6">
+                            <div class="card">
+                                <div class="nk-ecwg nk-ecwg6">
+                                    <div class="card-inner">
+                                        <div class="card-title-group">
+                                            <div class="card-title">
+                                                <h6 class="title">Repair Notice List</h6>
+                                            </div>
+                                        </div>
+                                        <div class="data">
+                                            <div class="data-group">
+                                                <div class="amount">{{repair_count}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-sm-6">
+                            <div class="card">
+                                <div class="nk-ecwg nk-ecwg6">
+                                    <div class="card-inner">
+                                        <div class="card-title-group">
+                                            <div class="card-title">
+                                                <h6 class="title">Total Quantity in Stock</h6>
+                                            </div>
+                                        </div>
+                                        <div class="data">
+                                            <div class="data-group">
+                                                <div class="amount">{{soul}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-sm-6">
+                            <div class="card">
+                                <div class="nk-ecwg nk-ecwg6">
+                                    <div class="card-inner">
+                                        <div class="card-title-group">
+                                            <div class="card-title">
+                                                <h6 class="title">Today's Visitors</h6>
+                                            </div>
+                                        </div>
+                                        <div class="data">
+                                            <div class="data-group">
+                                                <div class="amount">{{count}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- (Add charts and other dashboard content here as before) -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    var solidLineChart = {
+        labels: {{ label_item|safe }},
+        dataUnit: 'Items',
+        lineTension: .4,
+        datasets: [{
+            label: "Total Items",
+            color: "#5ce0aa",
+            background: 'transparent',
+            data: {{ data|safe }}
+        }]
+    };
+    var solidDataChart = {
+        labels: {{ label_item|safe }},
+        dataUnit: 'Items',
+        lineTension: .4,
+        legend: true,
+        datasets: [{
+            label: "Total Items",
+            color: "#5ce0aa",
+            background: 'transparent',
+            data: {{ data|safe }}
+        }, {
+            label: "Recently Received",
+            color: "#9d72ff",
+            background: 'transparent',
+            data: {{ receive_data|safe }}
+        }]
+    };
+</script>
+{% endblock %}
+
+
+

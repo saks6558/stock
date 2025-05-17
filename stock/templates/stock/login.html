@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<style>
+.login-center-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-card {
+    max-width: 400px;
+    width: 100%;
+    padding: 40px 24px 32px 24px;
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(101,118,255,0.10);
+    background: #fff;
+}
+.login-title {
+    color: #6576ff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+}
+</style>
+<div class="login-center-wrapper">
+    <div class="login-card text-center">
+        <div class="mb-3">
+            <span style="font-size: 2.5rem; color: #6576ff;">
+                <em class="icon ni ni-lock-alt"></em>
+            </span>
+        </div>
+        <div class="login-title">เข้าสู่ระบบ</div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="form-group mt-4">
+                <button type="submit" class="btn btn-primary btn-block" style="font-size: 1.2rem;">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 

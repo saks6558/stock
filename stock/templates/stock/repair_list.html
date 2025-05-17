@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <div class="nk-content-inner">
+        <div class="nk-content-body">
+            <div class="card" style="max-width: 1100px; margin: 40px auto;">
+                <div class="card-inner">
+                    <h3 class="title mb-4" style="color:#6576ff;">รายการแจ้งซ่อม</h3>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>วันที่</th>
+                                    <th>ชื่อผลิตภัณฑ์</th>
+                                    <th>ชื่อลูกค้า</th>
+                                    <th>รหัสเครื่อง</th>
+                                    <th>สาเหตุเสีย</th>
+                                    <th>สถานะ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for r in repairs %}
+                                <tr>
+                                    <td>{{ r.created_at|date:'d/m/Y H:i' }}</td>
+                                    <td>{{ r.product_name }}</td>
+                                    <td>{{ r.customer_name }}</td>
+                                    <td>{{ r.serial_number }}</td>
+                                    <td>{{ r.problem }}</td>
+                                    <td>
+                                        <span class="badge-dot" style="width:10px; height:10px; display:inline-block; border-radius:50%; margin-right:6px; background: {% if r.status == 'estimate' %}#f4b400{% elif r.status == 'in_progress' %}#6576ff{% elif r.status == 'done' %}#5ce0aa{% elif r.status == 'returned' %}#e74c3c{% else %}#ccc{% endif %};"></span>
+                                        {% if r.status == 'estimate' %}
+                                            <span class="badge" style="background:#f4b400; color:white; padding:2px 12px; border-radius:12px; font-size:0.95em;">ประเมิน</span>
+                                        {% elif r.status == 'in_progress' %}
+                                            <span class="badge" style="background:#6576ff; color:white; padding:2px 12px; border-radius:12px; font-size:0.95em;">ดำเนินการซ่อม</span>
+                                        {% elif r.status == 'done' %}
+                                            <span class="badge" style="background:#5ce0aa; color:white; padding:2px 12px; border-radius:12px; font-size:0.95em;">ซ่อมเสร็จ</span>
+                                        {% elif r.status == 'returned' %}
+                                            <span class="badge" style="background:#e74c3c; color:white; padding:2px 12px; border-radius:12px; font-size:0.95em;">ส่งคืน</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted">ไม่มีข้อมูล</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+const statusColors = {
+    estimate: '#f4b400',
+    in_progress: '#6576ff',
+    done: '#5ce0aa',
+    returned: '#e74c3c'
+};
+document.querySelectorAll('.status-dropdown').forEach(function(select) {
+    select.addEventListener('change', function() {
+        var id = this.getAttribute('data-id');
+        var status = this.value;
+        var formData = new FormData();
+        formData.append('status', status);
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        fetch('/repair_status/' + id + '/', {
+            method: 'POST',
+            body: formData,
+            headers: {'X-Requested-With': 'XMLHttpRequest'}
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                let msg = this.parentElement.querySelector('.status-message');
+                msg.style.display = 'inline';
+                setTimeout(() => { msg.style.display = 'none'; }, 1500);
+                // อัปเดต badge สี
+                let badge = this.parentElement.querySelector('.badge-dot');
+                if (badge) {
+                    badge.style.background = statusColors[this.value] || '#ccc';
+                }
+            }
+        });
+    });
+});
+</script>
+{% endblock %} 

@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <div class="nk-content-inner">
+        <div class="nk-content-body">
+            <div class="card" style="max-width: 1100px; margin: 40px auto;">
+                <div class="card-inner">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="title mb-0" style="color:#6576ff;">Contacts</h3>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalForm">
+                            <em class="icon ni ni-user-plus"></em> Add Contact
+                        </button>
+                    </div>
+                    <form class="mb-3" method="get">
+                        <div class="input-group">
+                            <span class="input-group-text"><em class="icon ni ni-search"></em></span>
+                            <input type="text" class="form-control" name="search" placeholder="Search Contacts...">
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Location</th>
+                                    <th>Phone</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for contact in people %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            {% if contact.image %}
+                                            <img src="{{ contact.image.url }}" alt="{{ contact.name }}" style="width:36px; height:36px; border-radius:50%; object-fit:cover; margin-right:10px;">
+                                            {% else %}
+                                            <span class="icon ni ni-user-alt" style="font-size:1.5rem; color:#6576ff; margin-right:10px;"></span>
+                                            {% endif %}
+                                            <div>
+                                                <div style="font-weight:600;">{{ contact.name }}</div>
+                                                <div style="font-size:0.95rem; color:#888;">{{ contact.occupation }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ contact.email }}</td>
+                                    <td>{{ contact.location }}</td>
+                                    <td>{{ contact.phone }}</td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-light" title="Edit"><em class="icon ni ni-edit"></em></a>
+                                        <a href="#" class="btn btn-sm btn-danger" title="Delete"><em class="icon ni ni-trash"></em></a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">No contacts found.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal for Add Contact -->
+            <div class="modal fade" tabindex="-1" id="modalForm">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add a contact</h5>
+                            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                                <em class="icon ni ni-cross"></em>
+                            </a>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="" class="form-validate is-alter">
+                                {% csrf_token %}
+                                {{form|crispy}}
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Add Contact</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer bg-light">
+                            <span class="sub-text">Modal Footer Text</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<script src="{% static 'js/contact.js' %}"></script>

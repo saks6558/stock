@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" class="js">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Stock Management System">
+    <title>Stock Management System</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="{% static 'css/dashlite.css' %}">
+    <link id="skin-default" rel="stylesheet" href="{% static 'css/theme.css' %}">
+    <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.min.css' %}" rel="stylesheet">
+    <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.structure.min.css' %}" rel="stylesheet">
+    <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.theme.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/all.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sweetalert2.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/navbar-top-fixed.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="nk-body dark-mode npc-default has-sidebar">
+    <div class="nk-app-root">
+        <div class="nk-main">
+            <!-- Sidebar Hover/Collapse Version -->
+            <style>
+            .sidebar {
+                width: 60px;
+                background: #f4f4f4;
+                transition: width 0.3s;
+                overflow-x: hidden;
+                height: 100vh;
+                position: fixed;
+                z-index: 100;
+                top: 0;
+                left: 0;
+                box-shadow: 2px 0 8px rgba(0,0,0,0.03);
+            }
+            .sidebar:hover {
+                width: 200px;
+            }
+            .nk-menu {
+                display: flex;
+                flex-direction: column;
+                margin-top: 32px;
+            }
+            .nk-menu-link {
+                display: flex;
+                align-items: center;
+                padding: 14px 10px;
+                text-decoration: none;
+                color: #333;
+                transition: background 0.2s;
+                border-radius: 8px;
+                margin: 2px 4px;
+            }
+            .nk-menu-link:hover {
+                background: #e0e7ff;
+                color: #6576ff;
+            }
+            .icon-class {
+                margin-right: 8px;
+                font-size: 1.3rem;
+                min-width: 24px;
+                text-align: center;
+            }
+            .menu-text {
+                white-space: nowrap;
+                opacity: 0;
+                transition: opacity 0.2s, margin 0.2s;
+                margin-left: 0;
+            }
+            .sidebar:hover .menu-text {
+                opacity: 1;
+                margin-left: 0;
+            }
+            .sidebar:not(:hover) .menu-text {
+                width: 0;
+                opacity: 0;
+                margin-left: 0;
+                overflow: hidden;
+                padding: 0;
+            }
+            .sidebar .sidebar-title {
+                font-size: 1.1rem;
+                color: #6576ff;
+                font-weight: bold;
+                text-align: left;
+                margin: 24px 0 8px 18px;
+                letter-spacing: 1px;
+                opacity: 0.7;
+            }
+            </style>
+            <div class="sidebar">
+                <div class="nk-menu">
+                    <a href="/" class="nk-menu-link">
+                        <span class="icon-class"><em class="icon ni ni-home-fill"></em></span>
+                        <span class="menu-text">Home</span>
+                    </a>
+                    <a href="/add_stock" class="nk-menu-link">
+                        <span class="icon-class"><em class="icon ni ni-cart-fill"></em></span>
+                        <span class="menu-text">Add Stock</span>
+                    </a>
+                    <a href="/view_stock" class="nk-menu-link">
+                        <span class="icon-class"><em class="icon ni ni-activity-round-fill"></em></span>
+                        <span class="menu-text">View Stock</span>
+                    </a>
+                    <a href="/view_history" class="nk-menu-link">
+                        <span class="icon-class"><em class="icon ni ni-growth-fill"></em></span>
+                        <span class="menu-text">View History</span>
+                    </a>
+                    <a href="/contacts" class="nk-menu-link">
+                        <span class="icon-class"><em class="icon ni ni-note-add"></em></span>
+                        <span class="menu-text">Contacts</span>
+                    </a>
+                    <a href="/add_repair_request/" class="nk-menu-link">
+                        <span class="icon-class"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                        <span class="menu-text">แจ้งซ่อม</span>
+                    </a>
+                    <a href="/repair_list/" class="nk-menu-link">
+                        <span class="icon-class"><em class="icon ni ni-list-thumb"></em></span>
+                        <span class="menu-text">รายการแจ้งซ่อม</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add this style for top-right icons -->
+    <style>
+    .top-right-icons {
+        position: absolute;
+        top: 20px;
+        right: 2cm;
+        display: flex;
+        gap: 10px;
+        z-index: 1000;
+    }
+    </style>
+    <!-- Example usage: -->
+    <!-- <div class="top-right-icons"> ...icons... </div> -->
+</body>
+</html>
