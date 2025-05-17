@@ -19,8 +19,6 @@ echo กด Ctrl+C เพื่อหยุดการทำงาน
 echo.
 echo ===================================
 echo.
-
 set SECRET_KEY=django-insecure-1234567890abcdefghijklmnopqrstuvwxyz
 set PASSWORD=szpjclceizqmyyus
-
 python manage.py runserver 0.0.0.0:8000 

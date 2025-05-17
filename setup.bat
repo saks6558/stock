@@ -196,5 +196,4 @@ echo - Username: admin
 echo - Password: gayboss43
 echo.
 echo ใช้ไฟล์ run_server.bat เพื่อเริ่มระบบ
-echo.
-pause 
+echo. 
